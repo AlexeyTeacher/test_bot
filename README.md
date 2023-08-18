@@ -1,4 +1,4 @@
-# test_bot
+# test_bot for yandex practicum
 Тестовое наставника kids ai
 ## Задание 
 Напиши на Python бота для Телеграм, который поможет нам с тобой познакомиться, задеплой его и пришли ссылку на работающего бота.
@@ -14,3 +14,18 @@
 Кроме этого, нужна команда, которая позволит получить нам ссылку на публичный репозиторий с исходниками этого бота.
 
 Сделай часть команд кнопками, а часть — текстом.
+
+## Решение 
+Переменные окружения смотрите в `config.py`
+
+
+### START Postgres
+```bash
+docker stop yandex_db || true && \
+docker rm yandex_db || true && \
+docker run -d --name yandex_db --restart always -p 5590:5432  \
+     -e POSTGRES_DB=yandex \
+     -e POSTGRES_USER=yandex \
+     -e POSTGRES_PASSWORD=yandex \
+     postgres -c shared_buffers=256MB 
+```
