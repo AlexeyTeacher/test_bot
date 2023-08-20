@@ -55,5 +55,3 @@ docker run --restart=always -d --name yandex_bot
        -e TKN=<your_token> 
        yandex_bot
 ```
-
-## Бот можно потыкать [тут](https://t.me/alexey_kirilov_test_bot)
