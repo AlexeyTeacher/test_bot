@@ -119,7 +119,7 @@ def draw_keyboard(update):
 
 
 def github(update, context):
-    """Возвращаем ссылку на исходники"""
+    """Возвращаем ссылку на исходники. Тригер на /github"""
     try:
         update.message.reply_text(
             text="Посмотреть из чего я состою на [github](https://github.com/AlexeyTeacher/test_bot)",
@@ -131,7 +131,7 @@ def github(update, context):
 
 
 def run_download(update, context):
-    """Возвращаем ссылку на исходники"""
+    """Первый этап загрузки контента. Предлагает выбрать тип контента и категорию. Тригер на /download"""
     categories = (session.query(
         Category.id, Category.name, ContentType.name
     ).join(ContentType, Category.content_type_id == ContentType.id).all())
@@ -146,7 +146,7 @@ def run_download(update, context):
 
 
 def download_start(update, context):
-    """Проверяет ответ на задание"""
+    """Второй этап загрузки контента. Дает загрузить сам контент."""
     category_id = update.message.text.strip().replace('№', '')
     category = session.query(Category.name, ContentType.name, ContentType.slug
                              ).join(ContentType, Category.content_type_id == ContentType.id
@@ -160,6 +160,7 @@ def download_start(update, context):
 
 
 def download_end(update, context):
+    """Третий этап загрузки контента. Обрабатывает и загружает контент в систему"""
     login = str(update.message.from_user.name)
     user = session.query(User).filter(User.login == login).first()
     category_id = USER_BASE.get(user.login, {}).get('last_command')
@@ -375,7 +376,7 @@ def story(update, context):
 
 
 def run_gpt(update, context):
-    """Кнопка Главное увлечение"""
+    """Кнопка GPT """
     try:
         category_name = session.query(Category.name).filter(Category.slug == 'gpt').first()[0]
         _run_standard(update, category_name)
@@ -385,7 +386,7 @@ def run_gpt(update, context):
 
 
 def gpt(update, context):
-    """Возвращает Главное увлечение пользователя или админа"""
+    """Возвращает GPT пользователя или админа"""
     variant = update.message.text.strip().replace('№', '')
     category_id = session.query(Category.id).filter(Category.slug == 'gpt').first()[0]
     try:
@@ -397,7 +398,7 @@ def gpt(update, context):
 
 
 def run_bases(update, context):
-    """Кнопка Главное увлечение"""
+    """Кнопка Разница в БД"""
     try:
         category_name = session.query(Category.name).filter(Category.slug == 'bases').first()[0]
         _run_standard(update, category_name)
@@ -407,7 +408,7 @@ def run_bases(update, context):
 
 
 def bases(update, context):
-    """Возвращает Главное увлечение пользователя или админа"""
+    """Возвращает Разницу в БД пользователя или админа"""
     variant = update.message.text.strip().replace('№', '')
     category_id = session.query(Category.id).filter(Category.slug == 'bases').first()[0]
     try:
@@ -419,7 +420,7 @@ def bases(update, context):
 
 
 def run_first_love(update, context):
-    """Кнопка Главное увлечение"""
+    """Кнопка Первая любовь"""
     try:
         category_name = session.query(Category.name).filter(Category.slug == 'first_love').first()[0]
         _run_standard(update, category_name)
@@ -429,7 +430,7 @@ def run_first_love(update, context):
 
 
 def first_love(update, context):
-    """Возвращает Главное увлечение пользователя или админа"""
+    """Возвращает "Первую любовь" пользователя или админа"""
     variant = update.message.text.strip().replace('№', '')
     category_id = session.query(Category.id).filter(Category.slug == 'first_love').first()[0]
     try:
